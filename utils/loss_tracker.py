@@ -12,7 +12,7 @@ class LossTracker(pl.Callback):
     def on_train_epoch_end(self, trainer, pl_module):
         loss = trainer.callback_metrics.get("train_loss").cpu()
         self.train_loss.append(loss)
-        self.plot()
+        #self.plot()
 
     #def on_validation_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
     def on_validation_epoch_end(self, trainer, pl_module):
@@ -26,9 +26,9 @@ class LossTracker(pl.Callback):
 
     def plot(self):
         # Clear ouput.
-        display.clear_output(wait=True)
+        #display.clear_output(wait=True)
 
-        fig, axes = plt.subplots(1, 2, figsize=(20, 4))
+        fig, axes = plt.subplots(1, 2, figsize=(12, 4))
         
         # Plot loss
         axes[0].plot(self.train_loss, label="Train loss")
