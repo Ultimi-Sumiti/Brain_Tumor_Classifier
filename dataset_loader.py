@@ -7,29 +7,9 @@ from torchvision.transforms import v2
 import random
 import numpy as np
 import os
+from typing import Optional, Callable
 
 
-class BRISCDataset(Dataset):
-    """
-    """
-
-    def __init__(self, file_path: str, transform = None):
-        """
-        """        
-        #
-        self.dataset = datasets.ImageFolder(file_path, transform = transform)
-
-    def __len__(self):
-        """This function return the len of the dataset."""
-        return len(self.dataset)
-
-    def __getitem__(self, idx):
-        """This function returns the item at the given index.
-        Arguments:
-            idx   The data index.
-        """
-        return self.dataset[idx]
-    
 class BRISCDataModule(L.LightningDataModule):
     """This class is a version of the LightningDataModule, after initialization
     it allows to set the dataset and then train dataloader.
@@ -43,8 +23,8 @@ class BRISCDataModule(L.LightningDataModule):
     """
 
     def __init__( self, data_dir: str, batch_size: int = 32, num_workers: int = 0, val_split: float = 0.2,
-                  image_size : int = 224 # Important that all images have the same dimension
                   #preload_gpu: bool = False,
+                  train_transform : Optional[Callable] = None, test_transform : Optional[Callable] = None
                 ):
         
         """This constructor initialize the main class attributes."""
@@ -54,32 +34,16 @@ class BRISCDataModule(L.LightningDataModule):
         #self.preload_gpu = preload_gpu
         self.nw = num_workers
         self.val_split = val_split
-        self.image_size = image_size
 
-        # Basic transformation.
-        self.transform = v2.Compose([
-            v2.Resize((image_size, image_size), antialias=True),                    
-            v2.RandomHorizontalFlip(p=0.5),                           
-            v2.RandomRotation(degrees=10),                             
-            v2.RandomAffine(degrees=0, scale=(0.9, 1.1)),              
-            #v2.ToDtype(torch.float32, scale=True),                    
-            #v2.Normalize(mean=[0.485, 0.456, 0.406],                  
-            #             std=[0.229, 0.224, 0.225]),
-            v2.ToTensor(), 
-            v2.ToDtype(torch.float32, scale=True)
-        ])
-
-        self.test_transform = v2.Compose([
-            v2.Resize((image_size, image_size), antialias=True),                    
-            v2.ToTensor()
-        ])
+        self.train_transform = train_transform
+        self.test_transform = test_transform
 
     def setup(self, stage: str):
         """
         This function set the dataset.
         """
         train_path = os.path.join(self.data_dir, "train")
-        full_train = datasets.ImageFolder(train_path, transform=self.transform)
+        full_train = datasets.ImageFolder(train_path, transform=self.train_transform)
         
         # Split train/val.
         val_size = int(len(full_train) * self.val_split)
