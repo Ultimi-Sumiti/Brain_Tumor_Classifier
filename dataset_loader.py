@@ -3,6 +3,7 @@ from pytorch_lightning.utilities.types import EVAL_DATALOADERS
 import torch
 from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import datasets, transforms
+from torchvision.transforms import v2
 import random
 import numpy as np
 import os
@@ -41,7 +42,7 @@ class BRISCDataModule(L.LightningDataModule):
 
     """
 
-    def __init__( self, data_dir: str, batch_size: int = 32, num_workers: int = 11, val_split: float = 0.2,
+    def __init__( self, data_dir: str, batch_size: int = 32, num_workers: int = 0, val_split: float = 0.2,
                   image_size : int = 224 # Important that all images have the same dimension
                   #preload_gpu: bool = False,
                 ):
@@ -56,10 +57,17 @@ class BRISCDataModule(L.LightningDataModule):
         self.image_size = image_size
 
         # Basic transformation.
-        self.transform = transforms.Compose([
-            transforms.Resize((self.image_size, self.image_size)),
-            transforms.ToTensor()
-        ])
+        self.transform = v2.Compose([
+            v2.Resize((512, 512), antialias=True),                    
+            v2.RandomHorizontalFlip(p=0.5),                           
+            v2.RandomRotation(degrees=10),                             
+            v2.RandomAffine(degrees=0, scale=(0.9, 1.1)),              
+            v2.ToDtype(torch.float32, scale=True),                    
+            v2.Normalize(mean=[0.485, 0.456, 0.406],                  
+                         std=[0.229, 0.224, 0.225]),
+            v2.ToImage(), 
+            v2.ToDtype(torch.float32, scale=True)
+    ])
 
     def setup(self, stage: str):
         """
