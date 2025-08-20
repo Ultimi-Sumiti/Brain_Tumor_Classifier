@@ -58,16 +58,21 @@ class BRISCDataModule(L.LightningDataModule):
 
         # Basic transformation.
         self.transform = v2.Compose([
-            v2.Resize((512, 512), antialias=True),                    
+            v2.Resize((image_size, image_size), antialias=True),                    
             v2.RandomHorizontalFlip(p=0.5),                           
             v2.RandomRotation(degrees=10),                             
             v2.RandomAffine(degrees=0, scale=(0.9, 1.1)),              
-            v2.ToDtype(torch.float32, scale=True),                    
-            v2.Normalize(mean=[0.485, 0.456, 0.406],                  
-                         std=[0.229, 0.224, 0.225]),
-            v2.ToImage(), 
+            #v2.ToDtype(torch.float32, scale=True),                    
+            #v2.Normalize(mean=[0.485, 0.456, 0.406],                  
+            #             std=[0.229, 0.224, 0.225]),
+            v2.ToTensor(), 
             v2.ToDtype(torch.float32, scale=True)
-    ])
+        ])
+
+        self.test_transform = v2.Compose([
+            v2.Resize((image_size, image_size), antialias=True),                    
+            v2.ToTensor()
+        ])
 
     def setup(self, stage: str):
         """
@@ -85,7 +90,7 @@ class BRISCDataModule(L.LightningDataModule):
 
         # Load test_dataset
         test_path = os.path.join(self.data_dir, "test")
-        self.test_dataset = datasets.ImageFolder(test_path, transform=self.transform)
+        self.test_dataset = datasets.ImageFolder(test_path, transform=self.test_transform)
 
     # Function which return the Dataloader of the training set
     def train_dataloader(self):
