@@ -1,17 +1,8 @@
-# Core Libraries
-import os, random
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# pytorch models
 import pytorch_lightning as pl
 import torch.nn as nn
 import torch
 from torchvision import models
 
-# Training and fine tuning.
 class ResNetFineTuner(pl.LightningModule):
     def __init__(self, num_classes=10, lr=1e-3, freeze_backbone=True):
         super().__init__()

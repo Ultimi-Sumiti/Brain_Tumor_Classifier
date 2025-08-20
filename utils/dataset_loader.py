@@ -1,12 +1,7 @@
-import pytorch_lightning as L
-from pytorch_lightning.utilities.types import EVAL_DATALOADERS
-import torch
-from torch.utils.data import Dataset, DataLoader, random_split
-from torchvision import datasets, transforms
-from torchvision.transforms import v2
-import random
-import numpy as np
 import os
+import pytorch_lightning as L
+from torch.utils.data import DataLoader, random_split
+from torchvision import datasets, transforms
 from typing import Optional, Callable
 
 
