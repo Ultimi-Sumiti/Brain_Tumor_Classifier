@@ -18,7 +18,7 @@ The dataset used in this work consists of 6000 MRI scans ([Paper](https://arxiv.
 glioma, pituitary, meningioma, and no tumor. To ensure the trained model generalizes well, the images are taken from three different perspectives or planes: 
 Coronal, Sagittal, and Axial.
 
-## Dataset<img width="1180" height="593" alt="brain_tumor_images" src="https://github.com/user-attachments/assets/57769afa-d9c6-499f-8bb7-2a57c86618a0" />
+# Brain tumor image<img width="1180" height="593" alt="brain_tumor_images" src="https://github.com/user-attachments/assets/57769afa-d9c6-499f-8bb7-2a57c86618a0" />
 
 ## Technologies and Tools
 The project was developed in Python using the PyTorch library. For the classification task, a Deep Convolutional Neural Network called [ResNet18](https://arxiv.org/abs/1512.03385%7D) was adopted as the backbone architecture due to its efficiency in image recognition. ResNet18 is a Residual Network with 18 layers and contains 11.2 million parameters.
