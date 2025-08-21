@@ -1,5 +1,10 @@
 import matplotlib.pyplot as plt
 from PIL import Image
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
+import torch.nn.functional as F
+import numpy as np
+import pandas as pd
 
 import os
 import random
@@ -67,5 +72,80 @@ def plot_samples(dataset_dir, transform):
         ax_trans.set_title(f'{name} - Transformed')
         ax_trans.axis('off')
 
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_confusion_matrix(brisc_dm, model):
+    
+    # Getting test dataloader.
+    test_ds = brisc_dm.test_dataloader()
+    
+    # Setting the model in evaluation mode.
+    model.eval()
+    
+    y_pred = []
+    y_true = []
+    
+    with torch.no_grad(): 
+        for images, labels in test_ds:
+            # Computing the outputs.
+            outputs = model(images)
+            # For the same image get the class with higher probability.
+            preds = torch.argmax(outputs, dim=1)
+            # Adding labels and predictions.
+            y_true.extend(labels.cpu().numpy())
+            y_pred.extend(preds.cpu().numpy())
+    
+    class_names = ["glioma", "meningioma", "no_tumor", "pituitary"]
+    
+    # Classification report.
+    print("Classification Report:\n")
+    print(classification_report(y_true, y_pred, target_names=class_names))
+    
+    
+    # Confusion matrix.
+    cm = confusion_matrix(y_true, y_pred)
+    
+    # Plot confusion matrix.
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                xticklabels=class_names, yticklabels=class_names)
+    
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted Class")
+    plt.ylabel("True Class")
+    plt.show()
+
+def plot_statistics(cm):
+    
+    class_names = ["glioma", "meningioma", "no_tumor", "pituitary"]
+    
+    TP = np.diag(cm)
+    FP = np.sum(cm, axis=0) - TP
+    FN = np.sum(cm, axis=1) - TP
+    TN = np.sum(cm) - (FP + FN + TP)
+    
+    accuracy = (TP + TN) / np.sum(cm)
+    precision = TP / (TP + FP)
+    recall = TP / (TP + FN)
+    f1_score = 2 * (precision * recall) / (precision + recall)
+
+    metrics_df = pd.DataFrame({
+    "Class": class_names,
+    "Accuracy": accuracy,
+    "Precision": precision,
+    "Recall": recall,
+    "F1 Score": f1_score
+    })
+
+    metrics_df
+
+    metrics_df.plot(x="Class", y=["Accuracy", "Precision", "Recall", "F1 Score"], kind="bar", figsize=(8, 5))
+    plt.title("Evaluation Metrics")
+    plt.ylabel("Score")
+    plt.xlabel("Class")
+    plt.xticks(rotation=45)
+    plt.legend(loc="upper right")
     plt.tight_layout()
     plt.show()
