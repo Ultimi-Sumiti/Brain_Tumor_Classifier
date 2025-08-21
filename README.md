@@ -79,9 +79,7 @@ Brain_Tumor_Classifier/
 The experiments demonstrated strong classification performance with an accuracy that confirmed the model's reliability across different views. The results highlight the potential of deep learning frameworks in medical diagnosis. State-of-the-art applications of similar frameworks in computer vision have shown that their performance can be more reliable than that of many doctors from a statistical point of view.
 
 Below are the results from the experiments, including the confusion matrix and evaluation metrics.
-# Confusion Matrix
-<img src="https://github.com/user-attachments/assets/7b919b8e-97e7-48ce-9dd4-c00ea0bcf99c" width="300" />
-# Confusion Matrix<img width="635" height="542" alt="confusion_matrix" src="https://github.com/user-attachments/assets/7b919b8e-97e7-48ce-9dd4-c00ea0bcf99c" />
+# Confusion Matrix<img src="https://github.com/user-attachments/assets/7b919b8e-97e7-48ce-9dd4-c00ea0bcf99c" width="300" />
 # Loss and accuracy<img width="864" height="277" alt="loss_accuracy" src="https://github.com/user-attachments/assets/727ae62f-22d2-4545-940f-cc320a82e2fa" />
 
 
