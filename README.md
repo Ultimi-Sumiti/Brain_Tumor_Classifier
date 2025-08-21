@@ -14,6 +14,7 @@ This project addresses the problem of brain tumor classification from Magnetic R
 ## Project's Goal
 The primary goal of this project is to create a simple and efficient pipeline capable of fine-tuning a pre-trained convolutional neural network to solve a multi-class classification task. This system is designed to distinguish between healthy and pathological brain scans by including a "no tumor" class. The project aims to achieve good performance in classifying three types of brain tumors.
 
+## Dataset
 The dataset used in this work consists of 6000 MRI scans ([Paper](https://arxiv.org/abs/2506.14318), [site](https://www.kaggle.com/datasets/briscdataset/brisc2025)). The images cover four classes: 
 glioma, pituitary, meningioma, and no tumor. To ensure the trained model generalizes well, the images are taken from three different perspectives or planes: 
 Coronal, Sagittal, and Axial.
