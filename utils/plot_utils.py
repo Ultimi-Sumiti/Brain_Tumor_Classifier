@@ -42,7 +42,6 @@ def plot_distribution(dataset_dir, name):
     ax.set_yticks([])
     plt.show()
 
-
 def plot_samples(dataset_dir, transform):
     class_names = ["glioma", "meningioma", "no_tumor", "pituitary"]
 
@@ -65,12 +64,12 @@ def plot_samples(dataset_dir, transform):
         ax_trans = axes[1, idx]
 
         ax_orig.imshow(orig, cmap='gray')
-        ax_orig.set_title(f'{name} - Original')
+        ax_orig.set_title(f'{name} - Original', fontsize=20)
         ax_orig.axis('off')
 
         ax_trans.imshow(trans.permute(1, 2, 0).numpy(), cmap='gray')
 
-        ax_trans.set_title(f'{name} - Transformed')
+        ax_trans.set_title(f'{name} - Transformed', fontsize=20)
         ax_trans.axis('off')
 
     plt.tight_layout()

@@ -72,13 +72,13 @@ class LossTracker(pl.Callback):
         # Plot loss
         axes[0].plot(self.train_loss, label="Train loss")
         axes[0].plot(self.val_loss[1:], label="Validation loss")
-        axes[0].set_xlabel("Iterations")
+        axes[0].set_xlabel("Epochs")
         axes[0].set_ylabel("Loss")
 
         # Plot accuracy
         axes[1].plot(self.train_acc, label="Train accuracy", color="purple")
         axes[1].plot(self.val_acc[1:], label="Validation accuracy", color="green")
-        axes[1].set_xlabel("Iterations")
+        axes[1].set_xlabel("Epochs")
         axes[1].set_ylabel("Accuracy")
 
         for ax in axes:
