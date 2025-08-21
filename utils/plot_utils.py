@@ -3,6 +3,7 @@ from PIL import Image
 from sklearn.metrics import classification_report, confusion_matrix
 import seaborn as sns
 import torch.nn.functional as F
+import torch
 import numpy as np
 import pandas as pd
 
@@ -55,19 +56,19 @@ def plot_samples(dataset_dir, transform):
     rand_files = [random.choice(rnd) for rnd in class_fn]
     print(rand_files)
 
-    fig, axes = plt.subplots(4, 2, figsize=(8, 16))
+    fig, axes = plt.subplots(2, 4, figsize=(16, 8))
     for (idx, path), name in zip(enumerate(rand_files), class_names):
         orig = Image.open(path)
         trans =transform(orig)
 
-        ax_orig = axes[idx, 0]
-        ax_trans = axes[idx, 1]
+        ax_orig = axes[0, idx]
+        ax_trans = axes[1, idx]
 
-        ax_orig.imshow(orig)
+        ax_orig.imshow(orig, cmap='gray')
         ax_orig.set_title(f'{name} - Original')
         ax_orig.axis('off')
 
-        ax_trans.imshow(trans.permute(1, 2, 0).numpy())
+        ax_trans.imshow(trans.permute(1, 2, 0).numpy(), cmap='gray')
 
         ax_trans.set_title(f'{name} - Transformed')
         ax_trans.axis('off')
@@ -116,6 +117,8 @@ def plot_confusion_matrix(brisc_dm, model):
     plt.xlabel("Predicted Class")
     plt.ylabel("True Class")
     plt.show()
+
+    return cm
 
 def plot_statistics(cm):
     
