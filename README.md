@@ -1,4 +1,5 @@
 ## Brain Tumor Classifier
+This project addresses the problem of brain tumor classification from Magnetic Resonance Imaging (MRI) scans using deep learning techniques. The system is designed to provide accurate tumor detection from MRI data, highlighting the potential of deep learning in assisting medical diagnosis.
 
 ## Table of Contents
 - [Brain Tumor Classifier](#brain-tumor-classifier)
@@ -9,21 +10,18 @@
 - [Project structure](#project-structure)
 - [How to download](#how-to-download)
 - [Performance and Results](#performance-and-results)
-  
-This project addresses the problem of brain tumor classification from Magnetic Resonance Imaging (MRI) scans using deep learning techniques. The system is designed to provide accurate tumor detection from MRI data, highlighting the potential of deep learning in assisting medical diagnosis.
-
 
 ## Project's Goal
 The primary goal of this project is to create a simple and efficient pipeline capable of fine-tuning a pre-trained convolutional neural network to solve a multi-class classification task. This system is designed to distinguish between healthy and pathological brain scans by including a "no tumor" class. The project aims to achieve good performance in classifying three types of brain tumors.
 
-The dataset used in this work consists of 6000 MRI scans ([Paper](https://arxiv.org/abs/2506.14318%7D), [site](https://www.kaggle.com/datasets/briscdataset/brisc2025)). The images cover four classes: 
+The dataset used in this work consists of 6000 MRI scans ([Paper](https://arxiv.org/abs/2506.14318), [site](https://www.kaggle.com/datasets/briscdataset/brisc2025)). The images cover four classes: 
 glioma, pituitary, meningioma, and no tumor. To ensure the trained model generalizes well, the images are taken from three different perspectives or planes: 
 Coronal, Sagittal, and Axial.
 
 # Brain tumor image<img width="1180" height="593" alt="brain_tumor_images" src="https://github.com/user-attachments/assets/57769afa-d9c6-499f-8bb7-2a57c86618a0" />
 
 ## Technologies and Tools
-The project was developed in Python using the PyTorch library. For the classification task, a Deep Convolutional Neural Network called [ResNet18](https://arxiv.org/abs/1512.03385%7D) was adopted as the backbone architecture due to its efficiency in image recognition. ResNet18 is a Residual Network with 18 layers and contains 11.2 million parameters.
+The project was developed in Python using the PyTorch library. For the classification task, a Deep Convolutional Neural Network called [ResNet18](https://arxiv.org/abs/1512.03385) was adopted as the backbone architecture due to its efficiency in image recognition. ResNet18 is a Residual Network with 18 layers and contains 11.2 million parameters.
 
 
 
