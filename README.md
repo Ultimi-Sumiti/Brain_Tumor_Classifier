@@ -40,6 +40,38 @@ The fine-tuning technique consists of the following main steps:
 
 5. Un-freeze the previous layers and fine-tune and continue training.
 
+## Project structure
+
+``` bash
+Brain_Tumor_Classifier/
+├── data/
+│   └── … (datasets or scripts for loading preprocessed images)
+├── good/
+│   └── … (possibly cleaned data or a subset of well-labeled samples)
+├── model/
+│   └── … (model definitions, pretrained ResNet18 fine-tuned code)
+├── utils/
+│   └── … (utility functions, helpers for training, evaluation, data loading)
+├── .gitignore        # to ignore temporary files
+├── README.md         # main documentation of project
+└── train_model_v1.ipynb  # notebook for training
+```
+
+## How to download
+
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Ultimi-Sumiti/Brain_Tumor_Classifier.git
+   ```
+2. **Navigate into the project directory**
+  ```bash
+  cd Brain_Tumor_Classifier
+  ```
+3. **Install dependencies**
+  ```bash
+   pip install -r requirements.txt
+  ```
 ## Performance and Results
 The experiments demonstrated strong classification performance with an accuracy that confirmed the model's reliability across different views. The results highlight the potential of deep learning frameworks in medical diagnosis. State-of-the-art applications of similar frameworks in computer vision have shown that their performance can be more reliable than that of many doctors from a statistical point of view.
 
