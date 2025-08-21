@@ -61,17 +61,17 @@ Brain_Tumor_Classifier/
 
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Ultimi-Sumiti/Brain_Tumor_Classifier.git
-   ```
+    ```bash
+    git clone https://github.com/Ultimi-Sumiti/Brain_Tumor_Classifier.git
+    ```
 2. **Navigate into the project directory**
-  ```bash
-  cd Brain_Tumor_Classifier
-  ```
+    ```bash
+    cd Brain_Tumor_Classifier
+    ```
 3. **Install dependencies**
-  ```bash
-   pip install -r requirements.txt
-  ```
+    ```bash
+     pip install -r requirements.txt
+    ```
 ## Performance and Results
 The experiments demonstrated strong classification performance with an accuracy that confirmed the model's reliability across different views. The results highlight the potential of deep learning frameworks in medical diagnosis. State-of-the-art applications of similar frameworks in computer vision have shown that their performance can be more reliable than that of many doctors from a statistical point of view.
 
