@@ -7,7 +7,7 @@
 - [Technologies and Tools](#technologies-and-tools)
 - [Fine-Tuning Process](#fine-tuning-process)
 - [Performance and Results](#performance-and-results)
-- 
+  
 This project addresses the problem of brain tumor classification from Magnetic Resonance Imaging (MRI) scans using deep learning techniques. The system is designed to provide accurate tumor detection from MRI data, highlighting the potential of deep learning in assisting medical diagnosis.
 
 
