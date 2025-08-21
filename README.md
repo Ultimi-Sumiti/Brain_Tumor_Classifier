@@ -6,6 +6,8 @@
 - [Dataset](#dataset)
 - [Technologies and Tools](#technologies-and-tools)
 - [Fine-Tuning Process](#fine-tuning-process)
+- [Project structure](#project-structure)
+- [How to download](#how-to-download)
 - [Performance and Results](#performance-and-results)
   
 This project addresses the problem of brain tumor classification from Magnetic Resonance Imaging (MRI) scans using deep learning techniques. The system is designed to provide accurate tumor detection from MRI data, highlighting the potential of deep learning in assisting medical diagnosis.
@@ -59,16 +61,18 @@ Brain_Tumor_Classifier/
 
 ## How to download
 
-
 1. **Clone the repository**
+   
     ```bash
     git clone https://github.com/Ultimi-Sumiti/Brain_Tumor_Classifier.git
     ```
 2. **Navigate into the project directory**
+   
     ```bash
     cd Brain_Tumor_Classifier
     ```
-3. **Install dependencies**
+3. **Install dependencie**
+   
     ```bash
      pip install -r requirements.txt
     ```
