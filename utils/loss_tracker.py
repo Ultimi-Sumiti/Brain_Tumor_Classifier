@@ -5,13 +5,16 @@ from IPython import display
 class LossTracker(pl.Callback):
     def __init__(self):
         self.train_loss = []
+        self.train_acc= []
         self.val_loss = []
         self.val_acc = []
 
     #def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
     def on_train_epoch_end(self, trainer, pl_module):
         loss = trainer.callback_metrics.get("train_loss").cpu()
+        acc = trainer.callback_metrics.get("train_acc").cpu()
         self.train_loss.append(loss)
+        self.train_acc.append(acc)
         #self.plot()
 
     #def on_validation_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
@@ -37,6 +40,7 @@ class LossTracker(pl.Callback):
         axes[0].set_ylabel("Loss")
 
         # Plot accuracy
+        axes[1].plot(self.train_acc, label="Train accuracy", color="purple")
         axes[1].plot(self.val_acc[1:], label="Validation accuracy", color="green")
         axes[1].set_xlabel("Iterations")
         axes[1].set_ylabel("Accuracy")

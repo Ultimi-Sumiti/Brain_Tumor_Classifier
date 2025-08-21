@@ -9,7 +9,7 @@ class ResNetFineTuner(pl.LightningModule):
         self.save_hyperparameters()
 
         # Load pretrained ResNet50
-        backbone = models.resnet50(pretrained=True)
+        backbone = models.resnet18(pretrained=True)
         if freeze_backbone:
             for param in backbone.parameters():
                 param.requires_grad = False
@@ -28,7 +28,9 @@ class ResNetFineTuner(pl.LightningModule):
         x, y = batch
         logits = self(x)
         loss = self.criterion(logits, y)
+        acc = (logits.argmax(dim=1) == y).float().mean()
         self.log('train_loss', loss)
+        self.log('train_acc', acc, prog_bar=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -38,6 +40,14 @@ class ResNetFineTuner(pl.LightningModule):
         acc = (logits.argmax(dim=1) == y).float().mean()
         self.log('val_loss', val_loss, prog_bar=True)
         self.log('val_acc', acc, prog_bar=True)
+
+    def test_step(self, batch, batch_idx):
+        x, y = batch
+        logits = self(x)
+        loss = self.criterion(logits, y)
+        acc = (logits.argmax(dim=1) == y).float().mean()
+        self.log('test_loss', loss)
+        self.log('test_acc', acc)
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
