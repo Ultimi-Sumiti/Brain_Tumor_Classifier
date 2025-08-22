@@ -7,6 +7,9 @@ import torch
 import numpy as np
 import pandas as pd
 
+from torchvision import transforms
+import cv2
+
 import os
 import random
 
@@ -119,6 +122,7 @@ def plot_confusion_matrix(brisc_dm, model):
 
     return cm
 
+
 def plot_statistics(cm):
     
     class_names = ["glioma", "meningioma", "no_tumor", "pituitary"]
@@ -151,3 +155,90 @@ def plot_statistics(cm):
     plt.legend(loc="upper right")
     plt.tight_layout()
     plt.show()
+
+
+def get_cam(img_path, model, plot=True):
+    class_names = ["glioma", "meningioma", "no_tumor", "pituitary"]
+    
+    model.eval()
+    
+    target_layer = model.model.layer4[1].conv2
+    
+    # Temporarily set requires_grad to True for the target layer and its immediate parent.
+    original_requires_grad = {}
+    for name, param in model.named_parameters():
+        if 'layer4' in name:
+            original_requires_grad[name] = param.requires_grad
+            param.requires_grad = True
+
+    # TO PASS AS ARG!
+    transform = transforms.Compose([
+        transforms.Resize((224, 224), antialias=True),
+        transforms.ToTensor(),
+    ])
+    
+    original_img = Image.open(img_path).convert("RGB")
+    input_tensor = transform(original_img).unsqueeze(0).requires_grad_(True)
+    
+    gradients = {}
+    activations = {}
+
+    def save_activation(name):
+        def hook(model, input, output):
+            activations[name] = output.detach()
+        return hook
+
+    def save_gradient(name):
+        def hook(module, grad_in, grad_out):
+            gradients[name] = grad_out[0].detach()
+        return hook
+
+    handle_activation = target_layer.register_forward_hook(save_activation("conv"))
+    handle_gradient = target_layer.register_backward_hook(save_gradient("conv"))
+
+    output = model.model(input_tensor)
+    
+    class_idx = output.argmax().item()
+    
+    score = output[0, class_idx]
+    score.backward()
+
+    grad = gradients["conv"][0]
+    act = activations["conv"][0]
+
+    # Compute weights and CAM.
+    weights = grad.mean(dim=(1, 2))
+    cam = (weights[:, None, None] * act).sum(0)
+    cam = torch.relu(cam)
+
+    # Normalize.
+    cam -= cam.min()
+    cam /= cam.max()
+
+    # Convert CAM to numpy and resize.
+    cam = cam.cpu().numpy()
+    cam = cv2.resize(cam, (original_img.size[0], original_img.size[1]))
+
+    # Normalize again after resize.
+    cam -= np.min(cam)
+    cam /= np.max(cam)
+
+    # Remove hooks.
+    handle_activation.remove()
+    handle_gradient.remove()
+
+    # Restore the original requires_grad state.
+    for name, param in model.named_parameters():
+        if 'layer4' in name:
+            param.requires_grad = original_requires_grad[name]
+    
+    # Overlay on original image and show.
+    if plot:
+        plt.figure()
+        plt.imshow(original_img)
+        plt.imshow(cam, cmap="jet", alpha=0.5)
+        plt.title(f"Predicted - {class_names[class_idx]}")
+        plt.axis("off")
+        plt.show()
+
+    return cam, class_idx
