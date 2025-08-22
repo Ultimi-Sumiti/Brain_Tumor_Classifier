@@ -1,4 +1,10 @@
+
+<p align="center">
+  <img width="200" height="200" alt="testlogo" src="https://github.com/user-attachments/assets/3c6ea48a-6e55-45f3-8d6e-ddf04fbfdebd" />
+</p>
+
 # Brain Tumor Classifier
+
 This project addresses the problem of brain tumor classification from Magnetic Resonance Imaging (MRI) scans using deep learning techniques. The system is designed to provide accurate tumor detection from MRI data, highlighting the potential of deep learning in assisting medical diagnosis.
 
 ## Table of Contents
