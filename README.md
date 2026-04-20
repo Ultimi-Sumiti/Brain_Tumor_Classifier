@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img width="200" height="200" alt="testlogo" src="https://github.com/user-attachments/assets/3c6ea48a-6e55-45f3-8d6e-ddf04fbfdebd" />
+  <img width="250" height="200" alt="testlogo" src="https://github.com/user-attachments/assets/3c6ea48a-6e55-45f3-8d6e-ddf04fbfdebd" />
 </p>
 
 # Brain Tumor Classifier
@@ -25,7 +25,7 @@ The dataset used in this work consists of 6000 MRI scans ([Paper](https://arxiv.
 glioma, pituitary, meningioma, and no tumor. To ensure the trained model generalizes well, the images are taken from three different perspectives or planes: 
 Coronal, Sagittal, and Axial.
 
-<table>
+<table align="center">
   <tr>
     <td align="center">
       <img src="./report_imgs/Train_distrib-1.png" width="300"/><br/>
@@ -36,8 +36,10 @@ Coronal, Sagittal, and Axial.
   </tr>
 </table>
 
-Example of an images taken from each class and their transformed versions.
+<p align="center">
+Images and their transformed version.
 <img width="600" height="600" alt="brain_tumor_images" src="./report_imgs/data_transform-1.png" />
+</p>
 
 ## Technologies and Tools
 The project was developed in Python using the PyTorch library. For the classification task, a Deep Convolutional Neural Network called [ResNet18](https://arxiv.org/abs/1512.03385) was adopted as the backbone architecture due to its efficiency in image recognition. ResNet18 is a Residual Network with 18 layers and contains 11.2 million parameters.
